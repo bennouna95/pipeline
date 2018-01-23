@@ -5,6 +5,12 @@ pipeline {
         jdk 'localJava'
     }
     stages {
+            stage ('scm') {
+            steps {
+            git poll: true, url: 'https://github.com/bennouna95/pipeline.git'
+            }
+       
+     }
         stage ('Build') {
             steps {
             bat 'mvn install'
@@ -15,6 +21,7 @@ pipeline {
                 }
             }
      }
+      
         stage ('Test unitaires'){
 		steps{
 			bat 'mvn test'
@@ -37,7 +44,7 @@ pipeline {
                  steps{
                         bat 'mvn checkstyle:checkstyle findbugs:findbugs sonar:sonar -Dsonar.host.url=http://localhost:9000/'
                         checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: ''
-                         findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: ' **/target/findbugsXml.xml', unHealthy: ''
+                        findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: ' **/target/findbugsXml.xml', unHealthy: ''
 
                  }
 }
