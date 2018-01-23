@@ -3,6 +3,7 @@ pipeline {
     tools {
         maven 'localMaven'
         jdk 'localJava'
+        gradle 'localGradle'
     }
     stages {
             stage ('Scrutation SCM') {
