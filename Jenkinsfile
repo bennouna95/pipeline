@@ -5,22 +5,30 @@ pipeline {
         jdk 'localJava'
     }
     stages {
-            stage ('scm') {
+            stage ('Scrutation SCM') {
             steps {
             git poll: true, url: 'https://github.com/bennouna95/pipeline.git'
             }
        
      }
-        stage ('Build') {
+     parallel {
+             stage ('Build With Maven') {
             steps {
             bat 'mvn install'
             }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
-                }
-            }
+
      }
+                 stage ('Build With Gradle') {
+            steps {
+            bat 'gradle build'
+            }
+
+     }
+     
+     
+     }
+     
+
       
         stage ('Test unitaires'){
 		steps{
