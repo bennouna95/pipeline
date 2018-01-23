@@ -12,6 +12,10 @@ pipeline {
             }
        
      }
+     stage('build'){
+         
+    
+
      parallel {
              stage ('Build With Maven') {
             steps {
@@ -28,7 +32,7 @@ pipeline {
      
      
      }
-     
+      }
 
       
         stage ('Test unitaires'){
